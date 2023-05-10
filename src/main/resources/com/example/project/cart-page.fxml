@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1320.0" style="-fx-border-color: #202020; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.Controllers.CartPageController">
+   <left>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="765.0" prefWidth="300.0" style="-fx-background-color: #303030; -fx-border-color: #202020; -fx-border-width: 5;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="BASELINE_RIGHT" prefHeight="110.0" prefWidth="240.0" style="-fx-border-color: #202020; -fx-border-width: 7px;">
+               <children>
+                  <Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="240.0" style="-fx-font-size: 35px; -fx-font-weight: BOLD;" text="Użytkownik" textFill="#04022b">
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="25.0" right="25.0" top="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="143.0" prefWidth="290.0">
+               <children>
+                  <Button fx:id="shopButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShopButtonClick" prefHeight="80.0" prefWidth="290.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 30px;" text="Sklep" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="40.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="125.0" prefWidth="290.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefHeight="80.0" prefWidth="300.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 30px;" text="Biblioteka" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="65.0" prefWidth="290.0" VBox.vgrow="ALWAYS" />
+            <HBox prefHeight="119.0" prefWidth="240.0" VBox.vgrow="ALWAYS" />
+            <HBox alignment="BOTTOM_CENTER" prefHeight="120.0" prefWidth="240.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="300.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 22px;" text="Ustawienia" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children></VBox>
+   </left>
+   <top>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #303030; -fx-border-color: #202020; -fx-border-width: 5px;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #303030;" HBox.hgrow="ALWAYS" />
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="400.0">
+               <children>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="88.0" prefWidth="403.0" style="-fx-font-weight: BOLD;" text="GAMENET" textAlignment="CENTER" textFill="#04022b" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="60.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #303030;" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="cartButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCartButtonClick" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Koszyk" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+   <right>
+      <VBox prefHeight="765.0" prefWidth="300.0" style="-fx-background-color: #303030; -fx-border-color: #202020; -fx-border-width: 5px;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #202020; -fx-border-width: 7px; -fx-background-color: #404040;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="87.0" prefWidth="276.0" style="-fx-font-size: 30px; -fx-text-fill: #202020; -fx-font-weight: BOLD;" text="Koszyk gier" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="253.0" prefWidth="290.0" VBox.vgrow="ALWAYS" />
+            <VBox prefHeight="180.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 7px;">
+               <children>
+                  <HBox prefHeight="90.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 5px;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="90.0" prefWidth="290.0" style="-fx-font-size: 30px; -fx-text-fill: #04022b; -fx-font-weight: BOLD;" text="Łączna kwota" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="90.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 5px;">
+                     <children>
+                        <Label fx:id="totalPrice" alignment="CENTER" contentDisplay="CENTER" prefHeight="90.0" prefWidth="290.0" style="-fx-font-size: 30px; -fx-text-fill: #04022b; -fx-font-weight: BOLD;" text="Cena" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox fillHeight="false" prefHeight="70.0" prefWidth="290.0" />
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="290.0" style="-fx-border-color: #202020; -fx-border-width: 7px;">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="77.0" prefWidth="135.0">
+                     <children>
+                        <Button fx:id="clear" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClearButtonClick" prefHeight="71.0" prefWidth="137.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Wyczyść" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="63.0" prefWidth="20.0" style="-fx-background-color: #202020;" />
+                  <VBox alignment="CENTER" prefHeight="63.0" prefWidth="135.0">
+                     <children>
+                        <Button fx:id="buyGames" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuyGamesClick" prefHeight="71.0" prefWidth="137.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Kup" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <ScrollPane fx:id="gameList" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #505050; -fx-border-color: #202020; -fx-border-width: 10px;" BorderPane.alignment="CENTER">
+         <content>
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="890.0" prefWidth="675.0" spacing="10.0" style="-fx-background-color: #404040;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="87.0" prefWidth="276.0" style="-fx-font-size: 30px; -fx-text-fill: #252525; -fx-font-weight: BOLD;" text="Koszyk pusty" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

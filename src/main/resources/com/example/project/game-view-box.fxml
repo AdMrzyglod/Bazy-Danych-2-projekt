@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="gameBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="675.0" style="-fx-background-color: #404040; -fx-border-color: #04022b; -fx-border-width: 8px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.Controllers.GameViewBoxController">
+   <children>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="235.0" style="-fx-border-color: #303030; -fx-border-width: 8px;">
+         <children>
+            <ImageView fx:id="gameImage" fitHeight="220.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../Desktop/images.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox maxWidth="1.7976931348623157E308" prefHeight="234.0" prefWidth="30.0" style="-fx-background-color: #04022b;" />
+      <VBox prefHeight="234.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+      <VBox prefHeight="234.0" prefWidth="286.0">
+         <children>
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="gameName" alignment="CENTER" contentDisplay="CENTER" prefHeight="95.0" prefWidth="272.0" style="-fx-font-size: 30px; -fx-text-fill: #000056; -fx-font-weight: BOLD;" text="Nazwa" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="142.0">
+                     <children>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #202020; -fx-font-size: 24px;" text="Kategoria:" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label fx:id="gameCategory" alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #000056; -fx-font-size: 20px;" text="Nazwa" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="142.0">
+                     <children>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #202020; -fx-font-size: 24px;" text="Rozmiar:" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label fx:id="gameSize" alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #000056; -fx-font-size: 20px;" text="Nazwa" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="142.0">
+                     <children>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #202020; -fx-font-size: 24px;" text="Cena:" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label fx:id="gamePrice" alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #000056; -fx-font-size: 20px;" text="Nazwa" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="142.0">
+                     <children>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #202020; -fx-font-size: 24px;" text="PL wersja:" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="142.0">
+                           <children>
+                              <Label fx:id="gamePolish" alignment="CENTER" prefHeight="44.0" prefWidth="145.0" style="-fx-text-fill: #000056; -fx-font-size: 20px;" text="Nazwa" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="234.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="8.0" style="-fx-background-color: #04022b;" />
+      <VBox prefHeight="234.0" prefWidth="100.0">
+         <children>
+            <HBox prefHeight="47.0" prefWidth="100.0" />
+            <HBox prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="buyButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuyButtonClickOn" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Kup" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="40.0" prefWidth="100.0" />
+            <HBox prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Opis" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="47.0" prefWidth="100.0" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

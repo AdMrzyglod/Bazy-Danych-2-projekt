@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="255.0" style="-fx-background-color: #505050; -fx-border-width: 7px; -fx-border-color: #303030;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.Controllers.NumberContainer">
+   <children>
+      <HBox maxHeight="-Infinity" prefHeight="60.0" prefWidth="251.0">
+         <children>
+            <Label fx:id="name" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="260.0" style="-fx-font-size: 24px; -fx-text-fill: #202020; -fx-font-weight: BOLD;" text="Nazwa" textFill="#04022b">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="130.0" prefWidth="250.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="130.0">
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="123.0">
+                     <children>
+                        <Label fx:id="name1" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="123.0" style="-fx-font-size: 24px; -fx-text-fill: #202020; -fx-font-weight: BOLD;" text="Od" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="from" alignment="CENTER" prefHeight="35.0" prefWidth="90.0" style="-fx-font-size: 18px; -fx-background-color: #606060; -fx-text-fill: #202020; -fx-font-weight: 600;" text="0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="0.0" prefWidth="130.0">
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="123.0">
+                     <children>
+                        <Label fx:id="name11" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="123.0" style="-fx-font-size: 24px; -fx-text-fill: #202020; -fx-font-weight: BOLD;" text="Do" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="to" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="90.0" style="-fx-font-size: 18px; -fx-background-color: #606060; -fx-text-fill: #202020; -fx-font-weight: 600;" text="10000" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>
