@@ -12,6 +12,7 @@ Do napisania aplikacji użyto:
   Apache Derby
   
   JavaFX
+  
 
 Funkcje aplikacji:
 
