@@ -4,9 +4,13 @@
 
 Aplikacja desktopowa do zarządzania biblioteką gier. 
 Do napisania aplikacji użyto:
+
   Java
+  
   JPA
+  
   Apache Derby
+  
   JavaFX
 
 Funkcje aplikacji:
