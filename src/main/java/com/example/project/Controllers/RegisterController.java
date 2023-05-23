@@ -1,10 +1,10 @@
 package com.example.project.Controllers;
 
+import com.example.project.Logic.IndividualUser;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.User;
+import com.example.project.Logic.PlatformUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -40,12 +40,11 @@ public class RegisterController {
         if(!getPassword().equals(getPassword1())){
             waring.setText("Niepoprawne hasło");
         }
-        else if(app.userInDataBase(getUsername())){
+        else if(app.provider.userExists(getUsername())){
             waring.setText("Użytkownik istnieje");
         }
         else{
-            User user= new User(getFirstname(),getLastname(),getUsername(),getPassword(),getEmail());
-            app.setUsers(user);
+            this.app.provider.addIndividualUser(new IndividualUser(getUsername(),getPassword(),getEmail(),getFirstname(),getLastname()));
 
             app.loginLoad(new Stage());
             closeStage();
@@ -58,6 +57,18 @@ public class RegisterController {
     protected void onReturn(ActionEvent e) throws IOException {
 
         this.app.loginLoad(new Stage());
+        closeStage();
+    }
+
+    @FXML
+    protected void onIndividual(ActionEvent e) throws IOException {
+        this.app.registerLoad(new Stage());
+        closeStage();
+    }
+
+    @FXML
+    protected void onCompany(ActionEvent e) throws IOException {
+        this.app.registerCompanyLoad(new Stage());
         closeStage();
     }
     private void closeStage(){

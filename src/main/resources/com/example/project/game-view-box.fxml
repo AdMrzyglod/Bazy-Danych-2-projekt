@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -100,19 +101,9 @@
       </VBox>
       <VBox prefHeight="234.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="8.0" style="-fx-background-color: #04022b;" />
-      <VBox prefHeight="234.0" prefWidth="100.0">
+      <VBox fx:id="textContainer" prefHeight="234.0" prefWidth="100.0">
          <children>
-            <HBox prefHeight="47.0" prefWidth="100.0" />
-            <HBox prefHeight="50.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="buyButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuyButtonClickOn" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Kup" textAlignment="CENTER">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="100.0" />
+            <HBox prefHeight="25.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
             <HBox prefHeight="50.0" prefWidth="100.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Opis" textAlignment="CENTER">
@@ -122,7 +113,23 @@
                   </Button>
                </children>
             </HBox>
-            <HBox prefHeight="47.0" prefWidth="100.0" />
+            <HBox prefHeight="25.0" prefWidth="100.0" />
+            <HBox fx:id="textBox" alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="quantity" alignment="CENTER" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-size: 15px;" />
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="100.0" />
+            <HBox prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="buyButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuyButtonClickOn" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-weight: BOLD; -fx-font-size: 20px;" text="Kup" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

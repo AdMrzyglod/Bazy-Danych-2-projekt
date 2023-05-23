@@ -1,23 +1,16 @@
 package com.example.project.Controllers;
 
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.User;
-import com.example.project.Main;
+import com.example.project.Logic.PlatformUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import static java.lang.System.out;
 
 public class LoginController {
 
@@ -32,9 +25,11 @@ public class LoginController {
     @FXML
     protected void onLogOnButtonClick(ActionEvent e) throws IOException {
 
-        if(app.checkUser(getUserName(),getPassword())) {
+        if(this.app.provider.loginAuthorization(getUserName(),getPassword())) {
 
-            app.setUser(new User(getUserName()));
+            app.setUser(this.app.provider.getUsersByName(getUserName()));
+
+            app.setCompany(this.app.provider.getIsCompanyUser(this.app.getUser().getUser_ID()));
             app.homeLoad(new Stage());
 
             closeStage();

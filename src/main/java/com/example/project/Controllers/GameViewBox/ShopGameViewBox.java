@@ -13,13 +13,11 @@ public class ShopGameViewBox extends AbstractGameViewBox{
         if (!super.gameViewBoxController.isInCart()) {
             super.gameViewBoxController.setInCart(true);
             super.gameViewBoxController.setBuyButton("Cofnij");
-            super.gameViewBoxController.getApp().getCart().addGame(super.gameViewBoxController.getGame());
-            this.gameViewBoxController.getApp().removeGame(super.gameViewBoxController.getGame());
+            super.gameViewBoxController.getApp().getCart().addGame(super.gameViewBoxController.getGame(),this.gameViewBoxController.getQuantity());
         } else {
             super.gameViewBoxController.setInCart(false);
             super.gameViewBoxController.setBuyButton("Kup");
             super.gameViewBoxController.getApp().getCart().removeGame(super.gameViewBoxController.getGame());
-            this.gameViewBoxController.getApp().addGame(super.gameViewBoxController.getGame());
         }
     }
 }

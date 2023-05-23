@@ -54,15 +54,15 @@ public class CategoryPanel {
             box.setAlignment(Pos.CENTER);
             box.setPrefHeight(50);
             box.setPrefWidth(250);
-            CheckBox checkBox = new CheckBox(category.getDisplayName());
+            CheckBox checkBox = new CheckBox(category.getCategoryName());
             checkBox.setOnAction((actionEvent) -> {
                 if(checkBox.isSelected()){
-                    specializedFilter.gameFilter.addCategory(Category.fromString(checkBox.getText()));
+                    specializedFilter.gameFilter.addCategory(new Category());
                 }
                 else{
-                    specializedFilter.gameFilter.removeCategory(Category.fromString(checkBox.getText()));
+                    specializedFilter.gameFilter.removeCategory(new Category());
                 }
-                out.println(Category.fromString(checkBox.getText()));
+
             });
             checkBox.setPrefHeight(50);
             checkBox.setPrefWidth(200);

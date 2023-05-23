@@ -65,6 +65,25 @@ public class HomeController {
         this.stage.close();
     }
 
+    @FXML
+    protected void onPaymentButtonClick(ActionEvent e) throws IOException {
+        app.paymentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onTournamentButtonClick(ActionEvent e) throws IOException {
+        app.tournamentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onLogout(ActionEvent e) throws IOException {
+        this.app.setUser(null);
+        this.app.loginLoad(new Stage());
+        closeStage();
+    }
+
 
     @FXML
     protected void setUserName(String user){
@@ -81,6 +100,10 @@ public class HomeController {
         vbox.setStyle("-fx-background-color: #404040;");
 
         for(Game game: games) {
+            int numberOfCodes= this.app.provider.getFreeCodes(game).size();
+            if(numberOfCodes==0 || this.app.getCart().isInCart(game)){
+                continue;
+            }
             FXMLLoader fxml = new FXMLLoader(Main.class.getResource("game-view-box.fxml"));
             Scene scene = new Scene(fxml.load());
             GameViewBoxController gameViewBoxController=fxml.getController();
@@ -89,11 +112,12 @@ public class HomeController {
             gameViewBoxController.setInCart(false);
             gameViewBoxController.setAbstractGameViewBox(new ShopGameViewBox(gameViewBoxController));
             HBox hBox = (HBox) scene.lookup("#gameBox");
+            gameViewBoxController.setCodesRange(numberOfCodes);
             ((Label)scene.lookup("#gameName")).setText(game.getGameName());
-            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getDisplayName());
+            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getCategoryName());
             ((Label)scene.lookup("#gameSize")).setText(game.getSizeGB()+"");
             ((Label)scene.lookup("#gamePrice")).setText(game.getPrice()+"");
-            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolish().getDisplayName());
+            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolishString());
             ((ImageView)scene.lookup("#gameImage")).setImage(new Image(new File(app.pathToImages+game.getImage()).getAbsolutePath()));
             vbox.getChildren().add(hBox);
         }
@@ -103,14 +127,14 @@ public class HomeController {
     @FXML
     public void applyFilters(ActionEvent e) throws IOException {
         this.categoryPanel.setFilters();
-        this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.games));
+        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.games));
     }
 
     @FXML
     public void setCategoryPanel() throws IOException {
         ScrollPane scrollPane=(ScrollPane) stage.getScene().lookup("#categoryList");
 
-        scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
+        //scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
     }
 
     @FXML

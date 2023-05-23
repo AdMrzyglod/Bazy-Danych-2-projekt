@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -44,6 +45,11 @@ public class LibraryController {
     private ScrollPane gameList;
 
     @FXML
+    private TextField mainCode;
+    @FXML
+    private Label codeProblem;
+
+    @FXML
     protected void onShopButtonClick(ActionEvent e) throws IOException {
         app.homeLoad(new Stage());
         this.stage.close();
@@ -61,10 +67,55 @@ public class LibraryController {
         this.stage.close();
     }
 
+    @FXML
+    protected void onPaymentButtonClick(ActionEvent e) throws IOException {
+        app.paymentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onTournamentButtonClick(ActionEvent e) throws IOException {
+        app.tournamentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onLogout(ActionEvent e) throws IOException {
+        this.app.setUser(null);
+        this.app.loginLoad(new Stage());
+        closeStage();
+    }
+
+    @FXML
+    protected void onUseCodeClickOn(ActionEvent e) throws IOException {
+        if(this.app.provider.isCodeCanBeUsed(getMainCode(),this.app.getUser().getUsername())){
+            this.app.provider.addCodeToUser(this.app.getUser().getUsername(),getMainCode());
+            this.app.libraryLoad(new Stage());
+            this.stage.close();
+        }
+        else{
+            setCodeProblem("Problem z kodem!");
+        }
+    }
+
+    @FXML
+    protected String getCodeProblem(){
+        return this.codeProblem.getText();
+    }
+
+    @FXML
+    protected void setCodeProblem(String message){
+        this.codeProblem.setText(message);
+    }
 
     @FXML
     protected void setUserName(String user){
         userName.setText(user);
+    }
+
+    @FXML
+    protected String getMainCode(){
+        return this.mainCode.getText();
     }
 
     @FXML
@@ -83,14 +134,15 @@ public class LibraryController {
             gameViewBoxController.setApp(app);
             gameViewBoxController.setGame(game);
             gameViewBoxController.setInCart(false);
+            gameViewBoxController.disableTextBox();
             gameViewBoxController.setAbstractGameViewBox(new LibraryGameViewBox(gameViewBoxController));
             HBox hBox = (HBox) scene.lookup("#gameBox");
             ((Button)scene.lookup("#buyButton")).setText("Włącz");
             ((Label)scene.lookup("#gameName")).setText(game.getGameName());
-            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getDisplayName());
+            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getCategoryName());
             ((Label)scene.lookup("#gameSize")).setText(game.getSizeGB()+"");
             ((Label)scene.lookup("#gamePrice")).setText(game.getPrice()+"");
-            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolish().getDisplayName());
+            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolishString());
             ((ImageView)scene.lookup("#gameImage")).setImage(new Image(new File(app.pathToImages+game.getImage()).getAbsolutePath()));
             vbox.getChildren().add(hBox);
         }
@@ -100,20 +152,20 @@ public class LibraryController {
     @FXML
     public void applyFilters(ActionEvent e) throws IOException {
         this.categoryPanel.setFilters();
-        this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
+        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
     }
 
     @FXML
     public void setCategoryPanel() throws IOException {
         ScrollPane scrollPane=(ScrollPane) stage.getScene().lookup("#categoryList");
 
-        scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
+        //scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
     }
 
     @FXML
     private void resetFilters(ActionEvent e) throws IOException {
         setCategoryPanel();
-        this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
+        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
     }
 
     public void setApp(AppController app){

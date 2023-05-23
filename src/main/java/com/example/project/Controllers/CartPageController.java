@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.System.out;
 
@@ -50,37 +53,52 @@ public class CartPageController {
     }
 
     @FXML
+    protected void onPaymentButtonClick(ActionEvent e) throws IOException {
+        app.paymentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onTournamentButtonClick(ActionEvent e) throws IOException {
+        app.tournamentLoad(new Stage());
+        this.stage.close();
+    }
+
+    @FXML
+    protected void onLogout(ActionEvent e) throws IOException {
+        this.app.setUser(null);
+        this.app.loginLoad(new Stage());
+        closeStage();
+    }
+
+    @FXML
     protected void onClearButtonClick(ActionEvent e) throws IOException {
         if(this.app.getCart().getNumberOfGames()>0) {
-            this.app.games.addAll(this.app.getCart().getGamesCart());
             this.app.getCart().clearCart();
-            addToGameList(app.getCart().getGamesCart());
-            setTotalPrice(this.app.getCart().getTotalPrice() + "");
+            addToGameList(this.app.getCart().getGamesCart());
+            setTotalPrice(0+"");
         }
     }
 
     @FXML
     protected void onBuyGamesClick(ActionEvent e) throws IOException {
         float sumCart=this.app.getCart().getTotalPrice();
-        if(this.app.getCart().getNumberOfGames()>0 && this.app.getUser().canBuy(sumCart)){
-            //this.app.getUser().addUserGameList(this.app.getCart().getGamesCart());
-            this.app.getCart().purchase(this.app.getUser());
-            this.app.getUser().updateMoney(-sumCart);
+        if(this.app.getCart().getNumberOfGames()>0 && this.app.provider.userCanBuy(this.app.getUser().getUsername(),sumCart)){
+            this.app.provider.purchase(this.app.getUser(),this.app.getCart().getGamesCart(),sumCart);
             this.app.getCart().clearCart();
-            setTotalPrice(this.app.getCart().getTotalPrice()+"");
-            addToGameList(app.getCart().getGamesCart());
+            setTotalPrice(0+"");
+            addToGameList(this.app.getCart().getGamesCart());
         }
-        out.println(this.app.getUser().getMoney());
     }
 
     @FXML
-    public void addToGameList(List<Game> games) throws IOException {
+    public void addToGameList(HashMap<Game,Integer> gameIntegerHashMap) throws IOException {
         ScrollPane scrollPane=(ScrollPane) stage.getScene().lookup("#gameList");
         VBox vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPrefHeight(890);
         vbox.setPrefWidth(675);
-        if(games.size()>0) {
+        if(gameIntegerHashMap.size()>0) {
             vbox.setStyle("-fx-background-color: #404040;");
         }
         else{
@@ -94,7 +112,9 @@ public class CartPageController {
 
         }
 
-        for(Game game: games) {
+        for (Map.Entry<Game, Integer> entry : gameIntegerHashMap.entrySet()) {
+            Game game = entry.getKey();
+            int quantity = entry.getValue();
             FXMLLoader fxml = new FXMLLoader(Main.class.getResource("game-view-box.fxml"));
             Scene scene = new Scene(fxml.load());
             GameViewBoxController gameViewBoxController=fxml.getController();
@@ -103,12 +123,13 @@ public class CartPageController {
             gameViewBoxController.setBuyButton("Usuń");
             gameViewBoxController.setInCart(true);
             gameViewBoxController.setAbstractGameViewBox(new CartGameViewBox(gameViewBoxController));
+            gameViewBoxController.setQuantity(quantity);
             HBox hBox = (HBox) scene.lookup("#gameBox");
             ((Label)scene.lookup("#gameName")).setText(game.getGameName());
-            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getDisplayName());
+            ((Label)scene.lookup("#gameCategory")).setText(game.getCategory().getCategoryName());
             ((Label)scene.lookup("#gameSize")).setText(game.getSizeGB()+"");
             ((Label)scene.lookup("#gamePrice")).setText(game.getPrice()+"");
-            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolish().getDisplayName());
+            ((Label)scene.lookup("#gamePolish")).setText(game.getIsPolishString());
             ((ImageView)scene.lookup("#gameImage")).setImage(new Image(new File(app.pathToImages+game.getImage()).getAbsolutePath()));
             vbox.getChildren().add(hBox);
         }

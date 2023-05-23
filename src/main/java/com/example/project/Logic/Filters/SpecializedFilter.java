@@ -27,7 +27,8 @@ public class SpecializedFilter {
         if(gameFilter.getIsPolish()== Option.BOTH){
             return true;
         }
-        return gameFilter.getIsPolish()==game.getIsPolish();
+        //return gameFilter.getIs()==game.getIsPolish();
+        return false;
     }
 
     public boolean checkGame(Game game){

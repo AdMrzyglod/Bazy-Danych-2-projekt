@@ -1,17 +1,16 @@
 package com.example.project.Logic;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Cart{
-    private List<Game> gamesCart;
+    private HashMap<Game,Integer> gamesCart;
 
     public Cart(){
-        this.gamesCart=new ArrayList<Game>();
+        this.gamesCart=new HashMap<>();
     }
 
-    public void addGame(Game game){
-        gamesCart.add(game);
+    public void addGame(Game game,int quantity){
+        this.gamesCart.put(game,quantity);
     }
 
     public void removeGame(Game game){
@@ -22,15 +21,16 @@ public class Cart{
         gamesCart.clear();
     }
 
-    public List<Game> getGamesCart() {
-        return this.gamesCart;
+    public HashMap<Game, Integer> getGamesCart() {
+        return gamesCart;
     }
 
     public float getTotalPrice(){
         float value=0;
-        for(Game game: this.getGamesCart()){
-            value+=game.getPrice();
+        for (Map.Entry<Game, Integer> entry : gamesCart.entrySet()) {
+            value+=entry.getKey().getPrice()*entry.getValue();
         }
+
         return value;
     }
 
@@ -38,7 +38,8 @@ public class Cart{
         return this.gamesCart.size();
     }
 
-    public void purchase(User user){
-        Order order=new Order(this.getGamesCart(),user);
+    public boolean isInCart(Game game){
+        return this.getGamesCart().containsKey(game);
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.project.Logic.MainController;
 import com.example.project.Controllers.*;
 import com.example.project.Logic.*;
 import com.example.project.Main;
+import com.example.project.Providers.Provider;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,30 +17,26 @@ import java.util.List;
 public class AppController extends Application {
 
     public final String pathToImages="src/main/resources/com/example/project/data/";
-    private User user;
-    private Cart cart;
-    public List<Game> games= new ArrayList<Game>();
-    public List<User> users= new ArrayList<User>();
 
+    public Provider provider= new Provider();
+    private PlatformUser platformUser;
+    private Cart cart;
     private LoginController loginController;
     private HomeController homeController;
     private CartPageController cartPageController;
     private LibraryController libraryController;
     private RegisterController registerController;
+    private RegisterCompanyController registerCompanyController;
+    private PaymentController paymentController;
+    private TournamentController tournamentController;
 
     public Stage stage;
-
+    private boolean isCompany=false;
 
     @Override
     public void start(Stage stage) throws IOException {
         this.cart=new Cart();
-        games.add(new Game("cod", Category.ADVENTURE,"cod.png",(float) 200.80,(float)1528.7, Option.YES));
-        games.add(new Game("cod1", Category.ARCADE,"cod.png",(float) 22.80,(float)1258.7,Option.NO));
-        games.add(new Game("cod2", Category.SIMULATION,"cod.png",(float) 300.80,(float)1548.7,Option.YES));
-        games.add(new Game("cod3", Category.SPORTS,"cod.png",(float) 120.80,(float)1158.7,Option.NO));
-        games.add(new Game("cod4", Category.STRATEGY,"cod.png",(float) 90.80,(float)1528.7,Option.YES));
-        games.add(new Game("cod5", Category.ROLE_PLAY,"cod.png",(float) 87.80,(float)1158.7,Option.NO));
-        this.users.add(new User("A","M","Nickname","password","example@example.com"));
+
         loginLoad(stage);
     }
 
@@ -66,6 +63,18 @@ public class AppController extends Application {
         stage.show();
     }
 
+    public void registerCompanyLoad(Stage stage) throws IOException {
+        this.stage=stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("register-page-company.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 800);
+        registerCompanyController=fxmlLoader.getController();
+        registerCompanyController.setApp(this);
+        registerCompanyController.setStage(stage);
+        stage.setTitle("GameNet");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void homeLoad(Stage stage) throws IOException {
         this.stage=stage;
         FXMLLoader fxmlLoader =  new FXMLLoader(Main.class.getResource("home-page.fxml"));
@@ -74,10 +83,10 @@ public class AppController extends Application {
         homeController.setApp(this);
         homeController.setStage(stage);
         Label userlabel=(Label) scene.lookup("#userName");
-        userlabel.setText(user.getUsername());
+        userlabel.setText(platformUser.getUsername());
         stage.setScene(scene);
         stage.setTitle("GameNet");
-        homeController.addToGameList(this.games);
+        homeController.addToGameList(this.provider.getGames());
         homeController.setCategoryPanel();
         stage.show();
     }
@@ -90,10 +99,10 @@ public class AppController extends Application {
         libraryController.setApp(this);
         libraryController.setStage(stage);
         Label userlabel=(Label) scene.lookup("#userName");
-        userlabel.setText(user.getUsername());
+        userlabel.setText(platformUser.getUsername());
         stage.setScene(scene);
         stage.setTitle("GameNet");
-        libraryController.addToGameList(this.user.getUserGames());
+        libraryController.addToGameList(this.provider.getUserGames(this.platformUser.getUsername()));
         libraryController.setCategoryPanel();
         stage.show();
     }
@@ -106,7 +115,7 @@ public class AppController extends Application {
         cartPageController.setApp(this);
         cartPageController.setStage(stage);
         Label userlabel=(Label) scene.lookup("#userName");
-        userlabel.setText(user.getUsername());
+        userlabel.setText(platformUser.getUsername());
         stage.setScene(scene);
         stage.setTitle("GameNet");
         cartPageController.addToGameList(getCart().getGamesCart());
@@ -114,25 +123,49 @@ public class AppController extends Application {
         stage.show();
     }
 
-
-    public void setUser(User user){
-        this.user=user;
+    public void paymentLoad(Stage stage) throws IOException {
+        this.stage=stage;
+        FXMLLoader fxmlLoader =  new FXMLLoader(Main.class.getResource("payment-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),1320,800);
+        paymentController=fxmlLoader.getController();
+        paymentController.setApp(this);
+        paymentController.setStage(stage);
+        Label userlabel=(Label) scene.lookup("#userName");
+        userlabel.setText(platformUser.getUsername());
+        stage.setScene(scene);
+        stage.setTitle("GameNet");
+        paymentController.addAllOrders();
+        stage.show();
     }
 
-    public User getUser() {
-        return user;
+    public void tournamentLoad(Stage stage) throws IOException {
+        this.stage=stage;
+        FXMLLoader fxmlLoader =  new FXMLLoader(Main.class.getResource("tournament-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),1320,800);
+        tournamentController=fxmlLoader.getController();
+        tournamentController.setApp(this);
+        tournamentController.setStage(stage);
+        Label userlabel=(Label) scene.lookup("#userName");
+        userlabel.setText(platformUser.getUsername());
+        stage.setScene(scene);
+        stage.setTitle("GameNet");
+        tournamentController.addTournaments(this.provider.getAvailableTournaments(this.getUser().getUsername()));
+        if(!isCompany()){
+            tournamentController.settingsForIndividual();
+        }
+        stage.show();
+    }
+
+    public void setUser(PlatformUser platformUser){
+        this.platformUser = platformUser;
+    }
+
+    public PlatformUser getUser() {
+        return platformUser;
     }
 
     public Cart getCart(){
         return this.cart;
-    }
-
-    public void addGame(Game game){
-        this.games.add(game);
-    }
-
-    public void removeGame(Game game){
-        this.games.remove(game);
     }
 
     public CartPageController getCartPageController() {
@@ -143,30 +176,11 @@ public class AppController extends Application {
         return libraryController;
     }
 
-    public List<User> getUsers(){
-        return this.users;
-    }
-    public void setUsers(User user){
-        this.users.add(user);
+    public void setCompany(boolean value){
+        this.isCompany=value;
     }
 
-    public boolean checkUser(String username,String password){
-        for(User user1: users){
-            if(user1.getUsername().equals(username) && user1.getPassword().equals(password)){
-                this.setUser(user1);
-                return true;
-            }
-        }
-        return false;
+    public boolean isCompany() {
+        return isCompany;
     }
-
-    public boolean userInDataBase(String username){
-        for(User user1: users){
-            if(user1.getUsername().equals(username)){
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

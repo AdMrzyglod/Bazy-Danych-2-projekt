@@ -1,29 +1,47 @@
 package com.example.project.Logic;
 
-public enum Category {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    ARCADE("zręcznościowe"),
-    ADVENTURE("przygodowe"),
-    ROLE_PLAY("fabularne"),
-    SPORTS("sportowe"),
-    STRATEGY("strategiczne"),
-    SIMULATION("symulacyjne");
+@Entity
+public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int Category_ID;
+    private String categoryName;
 
-    private String displayName;
-    Category(String displayName){
-        this.displayName=displayName;
+    private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<Game> games;
+
+    public Category(){
     }
-    public String getDisplayName() {
-        return displayName;
+    public Category(String categoryName,String description){
+
+        this.categoryName=categoryName;
+        this.description=description;
+        this.games= new ArrayList<>();
+    }
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public static Category fromString(String text) {
-        for (Category category : Category.values()) {
-            if (category.getDisplayName().equalsIgnoreCase(text)) {
-                return category;
-            }
-        }
-        return null;
+    public int getCategoryID() {
+        return Category_ID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void addGameToCategory(Game game){
+        this.games.add(game);
     }
 }

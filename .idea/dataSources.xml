@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="GameNet@localhost" uuid="42f1d0bd-ee1d-41cb-8cf9-b9a65a08e6cc">
-      <driver-ref>mongo</driver-ref>
+    <data-source source="LOCAL" name="GameNet@127.0.0.1" uuid="e10f7456-63c0-46e4-8809-c4b5ef64e93a">
+      <driver-ref>derby.remote</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://localhost:27017/GameNet</jdbc-url>
+      <jdbc-driver>org.apache.derby.jdbc.ClientDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby://127.0.0.1:1527/GameNet</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

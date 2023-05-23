@@ -4,6 +4,7 @@ import com.example.project.Controllers.GameViewBoxController;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CartGameViewBox extends AbstractGameViewBox{
 
@@ -14,7 +15,6 @@ public class CartGameViewBox extends AbstractGameViewBox{
     @Override
     public void onBuyButtonClickOn() {
         super.gameViewBoxController.getApp().getCart().removeGame(super.gameViewBoxController.getGame());
-        super.gameViewBoxController.getApp().addGame(super.gameViewBoxController.getGame());
         try {
             super.gameViewBoxController.getApp().getCartPageController().addToGameList(super.gameViewBoxController.getApp().getCart().getGamesCart());
             super.gameViewBoxController.refreshPriceLabel();

@@ -9,7 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
@@ -28,6 +30,12 @@ public class GameViewBoxController {
 
     @FXML
     private Button buyButton;
+    @FXML
+    private TextField quantity;
+    @FXML
+    private HBox textBox;
+    @FXML
+    private VBox textContainer;
     private boolean isInCart;
 
     @FXML
@@ -38,6 +46,21 @@ public class GameViewBoxController {
     public String getBuyButtonText(){
         return this.buyButton.getText();
     }
+    @FXML
+    public Integer getQuantity(){
+        return Integer.parseInt(this.quantity.getText());
+    }
+    @FXML
+    public void setQuantity(int quantity){
+        this.quantity.setText(quantity+"");
+        this.quantity.setEditable(false);
+    }
+    @FXML
+    public void setCodesRange(int numberOfCodes){
+        this.quantity.setPromptText("1 - "+numberOfCodes);
+    }
+
+
     public void setBuyButton(String buyButtonText){
         this.buyButton.setText(buyButtonText);
     }
@@ -52,6 +75,9 @@ public class GameViewBoxController {
     }
     public void setGame(Game game){
         this.game=game;
+    }
+    public void disableTextBox(){
+        this.textContainer.getChildren().remove(this.textBox);
     }
 
     public boolean isInCart() {
