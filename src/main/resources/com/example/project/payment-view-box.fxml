@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="paymentBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="463.0" prefWidth="675.0" style="-fx-background-color: #404040; -fx-border-color: #04022b; -fx-border-width: 8px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.Controllers.PaymentViewBoxController">
+   <children>
+      <VBox fx:id="secondPaymentBox" maxWidth="1.7976931348623157E308" prefHeight="452.0" prefWidth="659.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="200.0" style="-fx-border-color: #04022b; -fx-border-width: 5px;">
+               <children>
+                  <Label fx:id="orderName" alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="184.0" style="-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;" text="Zamówienie nr:" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderNumber" alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="123.0" style="-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;" text="Nazwa" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="132.0" style="-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;" text="Data:" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="95.0" prefWidth="250.0" style="-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;" text="Nazwa" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
