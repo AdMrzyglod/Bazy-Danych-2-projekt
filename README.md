@@ -2,17 +2,16 @@
 # Adrian Mrzygłód
 
 
-Aplikacja desktopowa do zarządzania biblioteką gier. 
-Do napisania aplikacji użyto:
+Aplikacja desktopowa do zarządzania biblioteką gier. Do napisania 
+aplikacji użyto:
 
-  Java
-  
-  JPA
-  
-  Apache Derby
-  
-  JavaFX
-  
+Java
+
+JPA
+
+Apache Derby
+
+JavaFX
 
 Funkcje aplikacji:
 
@@ -26,4 +25,12 @@ Funkcje aplikacji:
 
 -Można zapisać się na turnieje w grach, które się posiada,
 
-Dodatkowo użytkownik firmowy może tworzyć zapisy na turnieje, które organizuje.
+Dodatkowo użytkownik firmowy może tworzyć zapisy na 
+turnieje, które organizuje.
+
+Pracownik może:
+
+-Dodać grę, kod oraz kategorię,
+
+-Zatwierdzić wpłatę użytkownika.
+
