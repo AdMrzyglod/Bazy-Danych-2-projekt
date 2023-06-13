@@ -1,11 +1,11 @@
 package com.example.project.Providers;
 
 import com.example.project.Logic.*;
-import com.example.project.RandomCode;
+import com.example.project.Logic.DatabaseClasses.*;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Order;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +13,7 @@ import java.util.*;
 
 public class Provider {
     private static final EntityManagerFactory emf;
+    private static EntityManager em;
     static {
         try {
             Configuration configuration = new Configuration();
@@ -21,60 +22,17 @@ public class Provider {
             emf= Persistence.
                     createEntityManagerFactory("myDatabaseConfig");
 
+            em=emf.createEntityManager();
+
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
-    public static EntityManager getManager(){
-        return emf.createEntityManager();
+    public EntityManager getManager(){
+        return em;
     }
-    public void main(final String[] args) throws Exception {
-        final EntityManager manager = getManager();
-        try {
-            EntityTransaction etx = manager.getTransaction();
-            etx.begin();
-
-            /*
-            for (CategoryName categoryName : CategoryName.values()){
-                manager.persist(new Category(categoryName.getDisplayName(),"other"));
-            }
-
-            manager.persist(new Game("cod", getCategory(CategoryName.ADVENTURE.getDisplayName()),"cod.png",(float) 200.80,(float)1528.7, true));
-            manager.persist(new Game("cod1", getCategory(CategoryName.ARCADE.getDisplayName()),"cod.png",(float) 22.80,(float)1258.7,false));
-            manager.persist(new Game("cod2", getCategory(CategoryName.SIMULATION.getDisplayName()),"cod.png",(float) 300.80,(float)1548.7,true));
-            manager.persist(new Game("cod3", getCategory(CategoryName.SPORTS.getDisplayName()),"cod.png",(float) 120.80,(float)1158.7,false));
-            manager.persist(new Game("cod4", getCategory(CategoryName.STRATEGY.getDisplayName()),"cod.png",(float) 90.80,(float)1528.7,true));
-            manager.persist(new Game("cod5", getCategory(CategoryName.ROLE_PLAY.getDisplayName()),"cod.png",(float) 87.80,(float)1158.7,false));
-
-             */
-
-           /* List<Game> games = getGames();
-
-            for(Game game: games){
-
-                for(int i=0;i<(int)Math.floor(Math.random() * (15 - 3 + 1) + 3);i++) {
-                    addGameCode(game, RandomCode.getString());
-                }
-            }
-
-            */
-
-           /* CompanyUser user= (CompanyUser) getUsersByName("GameDev");
-            Game game = getGameByName("cod3");
-
-            Tournament tournament = new Tournament("NEW_OPEN",getTimeFromString("2023-06-20 11:00:00"),getTimeFromString("2023-06-20 14:00:00"),"Other",200,user,game);
-
-            manager.persist(tournament);
-
-            */
-
-
-            etx.commit();
-
-
-        } finally {
-            manager.close();
-        }
+    public void setEntityManager(){
+        em= emf.createEntityManager();
     }
 
 
@@ -94,8 +52,6 @@ public class Provider {
 
         PlatformUser user=platformUsers.size()==0 ? null : platformUsers.get(0);
 
-
-
         return user;
     }
 
@@ -103,10 +59,9 @@ public class Provider {
         PlatformUser platformUser = getUsersByName(username);
 
         List<Game> games = new ArrayList<>();
-        for(GameCode gameCode:platformUser.getGameCodes()){
-            games.add(gameCode.getGame());
+        for(ActiveCode activeCode:platformUser.getActiveCodes()){
+            games.add(activeCode.getGameCode().getGame());
         }
-
         return games;
     }
 
@@ -118,6 +73,27 @@ public class Provider {
         PlatformUser platformUser = getUsersByName(username);
         if(platformUser!=null){
             return password.equals(platformUser.getPassword());
+        }
+        return false;
+    }
+
+    public Employee getEmployee(String username){
+        final EntityManager manager = getManager();
+
+        Query query = manager.createQuery("SELECT e from Employee e where e.username= :username");
+        query.setParameter("username",username);
+        List<Employee> employees = query.getResultList();
+
+        Employee user=employees.size()==0 ? null : employees.get(0);
+
+
+        return user;
+    }
+
+    public boolean employeeLoginAuthorization(String username,String password){
+        Employee employee = getEmployee(username);
+        if(employee!=null){
+            return password.equals(employee.getPassword());
         }
         return false;
     }
@@ -139,6 +115,7 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
@@ -159,6 +136,7 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
@@ -169,10 +147,21 @@ public class Provider {
         query.setParameter("name",name);
         List<Category> categories = query.getResultList();
 
-        Category category = categories==null ? null : categories.get(0);
+        Category category = categories.size()==0 ? null : categories.get(0);
 
 
         return category;
+    }
+
+    public List<Category> getAllCategories(){
+        final EntityManager manager = getManager();
+
+        Query query = manager.createQuery("SELECT c from Category c");
+        List<Category> categories = query.getResultList();
+
+
+
+        return categories;
     }
 
     public Game getGameByName(String name){
@@ -200,7 +189,7 @@ public class Provider {
     public List<GameCode> getFreeCodes(Game game){
         final EntityManager manager = getManager();
 
-        Query query = manager.createQuery("SELECT cod from GameCode cod where cod.orderDetails=NULL and cod.game=:game",GameCode.class);
+        Query query = manager.createQuery("SELECT cod from GameCode cod where cod NOT IN (SELECT od.gameCode FROM OrderDetails od) and cod.game=:game",GameCode.class);
         query.setParameter("game",game);
         List<GameCode> gameCodes = new ArrayList<>(query.getResultList());
 
@@ -208,13 +197,53 @@ public class Provider {
         return gameCodes;
     }
 
-    public void addGameCode(Game game,String code){
+    public void addGame(Game game){
         final EntityManager manager = getManager();
         EntityTransaction etx = manager.getTransaction();
         try {
             etx.begin();
 
-            GameCode gameCode = new GameCode(code,game);
+            manager.persist(game);
+
+            etx.commit();
+
+        }catch (Exception exception){
+            if(etx.isActive()){
+                etx.rollback();
+            }
+        }
+        finally {
+            manager.close();
+            setEntityManager();
+        }
+    }
+
+    public void addCategory(Category category){
+        final EntityManager manager = getManager();
+        EntityTransaction etx = manager.getTransaction();
+        try {
+            etx.begin();
+
+            manager.persist(category);
+
+            etx.commit();
+
+        }catch (Exception exception){
+            if(etx.isActive()){
+                etx.rollback();
+            }
+        }
+        finally {
+            manager.close();
+            setEntityManager();
+        }
+    }
+
+    public void addGameCode(GameCode gameCode){
+        final EntityManager manager = getManager();
+        EntityTransaction etx = manager.getTransaction();
+        try {
+            etx.begin();
 
             manager.persist(gameCode);
 
@@ -227,49 +256,55 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
-    public boolean userCanBuy(String user,float money){
+    public boolean userCanBuy(String user,BigDecimal money){
         PlatformUser platformUser = getUsersByName(user);
-        return platformUser.getMoney()-money>0 ? true : false;
+        return platformUser.canBuy(money);
     }
 
-    public void purchase(PlatformUser user,HashMap<Game, Integer> gamesDetails,float totalSum){
+    public void purchase(String username,Cart cart,BigDecimal totalSum){
         final EntityManager manager = getManager();
         EntityTransaction etx = manager.getTransaction();
         try {
             etx.begin();
 
-            PlatformUser platformUser= getUsersByName(user.getUsername());
+            HashMap<Game, Integer> gamesDetails = cart.getGamesCart();
+
+            PlatformUser platformUser= getUsersByName(username);
 
             PlatformOrder platformOrder = new PlatformOrder(platformUser);
 
+            manager.persist(platformOrder);
+
+
             for(Map.Entry<Game, Integer> entry : gamesDetails.entrySet()){
+
                 List<GameCode> gameCodes = getFreeCodes(entry.getKey());
+
                 if(gameCodes.size()-entry.getValue()<0){
                     throw new IllegalArgumentException("Too few game codes!");
                 }
+
                 Game game = entry.getKey();
                 int quantity= entry.getValue();
-                OrderDetails details = new OrderDetails(game.getPrice(),platformOrder,game);
-                manager.persist(details);
-                details.addCode(new ArrayList<GameCode>(gameCodes.subList(0,quantity)));
 
                 for(GameCode code: gameCodes.subList(0,quantity)){
+                    OrderDetails orderDetails = new OrderDetails(game.getPrice(),platformOrder,code);
+                    manager.persist(orderDetails);
                     manager.merge(code);
                 }
             }
 
-
-            platformUser.updateMoney(-totalSum);
-
-
-            manager.persist(platformOrder);
+            platformUser.updateMoney(totalSum.negate());
 
             manager.merge(platformUser);
 
             etx.commit();
+
+            cart.clearCart();
 
         }catch (Exception exception){
             if(etx.isActive()){
@@ -278,8 +313,8 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
-
     }
 
     public boolean userOwnGame(String username,Game game){
@@ -303,7 +338,7 @@ public class Provider {
 
         final EntityManager manager = getManager();
 
-        Query query = manager.createQuery("SELECT cod from GameCode cod where cod.orderDetails!=NULL and cod.accessCode=:code and cod.user=NULL",GameCode.class);
+        Query query = manager.createQuery("SELECT cod from GameCode cod where cod IN (SELECT od.gameCode FROM OrderDetails od) and cod.accessCode=:code and cod not in (SELECT ac.gameCode FROM ActiveCode ac)",GameCode.class);
         query.setParameter("code",code);
         List<GameCode> gameCodes = new ArrayList<>(query.getResultList());
 
@@ -324,8 +359,9 @@ public class Provider {
             PlatformUser user = getUsersByName(username);
             GameCode gameCode = getGameCode(code);
 
-            gameCode.setUser(user);
+            ActiveCode activeCode = new ActiveCode(user,gameCode);
 
+            manager.persist(activeCode);
 
             manager.merge(gameCode);
             manager.merge(user);
@@ -339,6 +375,7 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
@@ -380,6 +417,7 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
@@ -422,30 +460,29 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
-    public List<Tournament> getAvailableTournaments(String username){
+    public List<Tournament> getAvailableTournaments(int userID){
+
         final EntityManager manager = getManager();
 
-        PlatformUser user = getUsersByName(username);
-
         TypedQuery<Tournament> query = manager.createQuery(
-                "SELECT t FROM Tournament t WHERE t.startTournament>current_timestamp and  t NOT IN (SELECT ut.tournament FROM UserTournament ut  WHERE ut.user.User_ID = :user)", Tournament.class);
-        query.setParameter("user", user.getUser_ID());
+                "SELECT t FROM Tournament t WHERE t.startTournament>current_timestamp and t.userTournaments.size<t.userLimit and  t NOT IN (SELECT ut.tournament FROM UserTournament ut  WHERE ut.user.User_ID = :user) and not t.companyUser.User_ID=:user", Tournament.class);
+        query.setParameter("user", userID);
         List<Tournament> tournaments = query.getResultList();
 
         return tournaments;
     }
 
-    public List<Tournament> getUserTournaments(String username){
-        final EntityManager manager = getManager();
+    public List<Tournament> getUserTournaments(int userID){
 
-        PlatformUser user = getUsersByName(username);
+        final EntityManager manager = getManager();
 
         TypedQuery<Tournament> query = manager.createQuery(
                 "SELECT t FROM Tournament t WHERE t IN (SELECT ut.tournament FROM UserTournament ut  WHERE ut.user.User_ID = :user)", Tournament.class);
-        query.setParameter("user", user.getUser_ID());
+        query.setParameter("user", userID);
         List<Tournament> tournaments = query.getResultList();
 
         return tournaments;
@@ -461,7 +498,6 @@ public class Provider {
         List<UserTournament> list = query.getResultList();
 
         String code= list.size()>0 ? list.get(0).getAccessCode() : "";
-        manager.close();
 
         return code;
     }
@@ -526,6 +562,7 @@ public class Provider {
         }
         finally {
             manager.close();
+            setEntityManager();
         }
     }
 
@@ -537,6 +574,66 @@ public class Provider {
         List<Payment> payments = query.getResultList();
 
         return payments.size()>0 ? payments.get(0) : null;
+    }
+
+    public List<Payment> getAllNotVerifiedPayment(){
+        final EntityManager manager = getManager();
+
+        Query query = manager.createQuery("SELECT p FROM Payment p where p.isVerified=false",Payment.class);
+        List<Payment> payments = query.getResultList();
+
+        return payments.size()>0 ? payments : null;
+    }
+
+    public void verifiedPayment(int paymentID){
+        final EntityManager manager = getManager();
+        EntityTransaction etx = manager.getTransaction();
+        try {
+            etx.begin();
+
+            Query query = manager.createQuery("SELECT p FROM Payment p where p.payment_ID=:id",Payment.class);
+            query.setParameter("id", paymentID);
+            List<Payment> payments = query.getResultList();
+
+            if(payments.size()==0 || payments.get(0).isVerified()==true){
+                throw new Exception();
+            }
+
+            Payment payment = payments.get(0);
+
+            payment.setVerified(true);
+
+            manager.merge(payment);
+
+            PlatformUser platformUser = getUsersByName(payment.getPlatformUser().getUsername());
+
+            platformUser.updateMoney(payment.getAmount());
+
+            manager.merge(platformUser);
+
+            etx.commit();
+
+        }catch (Exception exception){
+            if(etx.isActive()){
+                etx.rollback();
+            }
+        }
+        finally {
+            manager.close();
+            setEntityManager();
+        }
+    }
+
+    public String getCodeToTournament(int tournamentID, int userID){
+        final EntityManager manager = getManager();
+
+        TypedQuery<UserTournament> query = manager.createQuery(
+                "SELECT t FROM UserTournament t WHERE t.tournament.Tournament_ID=:tournamentID and t.user.User_ID=:userID", UserTournament.class);
+        query.setParameter("tournamentID", tournamentID);
+        query.setParameter("userID",userID);
+        List<UserTournament> tournaments = query.getResultList();
+
+        return tournaments.size()==0 ? null : tournaments.get(0).getAccessCode();
     }
 
 }

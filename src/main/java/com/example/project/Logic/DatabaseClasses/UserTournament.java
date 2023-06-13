@@ -1,4 +1,4 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 
 import javax.persistence.*;
@@ -19,6 +19,11 @@ public class UserTournament {
     private PlatformUser user;
 
     private String accessCode;
+
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
 
     public UserTournament(){
     }

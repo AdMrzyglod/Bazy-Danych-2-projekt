@@ -1,4 +1,4 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 
 import javax.persistence.*;
@@ -30,6 +30,11 @@ public class Tournament {
     @JoinColumn(name="game_id")
     private Game game;
 
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
+
     public Tournament(){
     }
 
@@ -42,6 +47,7 @@ public class Tournament {
         this.companyUser = companyUser;
         this.game = game;
         this.userTournaments= new ArrayList<UserTournament>();
+        this.version=0;
     }
 
     public Timestamp getStartTournament() {

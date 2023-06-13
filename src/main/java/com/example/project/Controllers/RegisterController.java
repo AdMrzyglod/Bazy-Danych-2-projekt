@@ -1,8 +1,7 @@
 package com.example.project.Controllers;
 
-import com.example.project.Logic.IndividualUser;
+import com.example.project.Logic.DatabaseClasses.IndividualUser;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.PlatformUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

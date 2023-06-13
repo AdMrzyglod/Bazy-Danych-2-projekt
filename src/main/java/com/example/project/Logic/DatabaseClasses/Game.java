@@ -1,6 +1,7 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,29 +13,27 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Game_ID;
     private String gameName;
-    private int quantity;
+    private String image;
+    private BigDecimal price;
+    private BigDecimal sizeGB;
+    private boolean isPolish;
 
     @OneToMany(mappedBy = "game")
     private List<GameCode> gameCodes;
     @ManyToOne
     @JoinColumn(name = "Category_ID")
     private Category category;
-    private String image;
-    private float price;
-    private float sizeGB;
-
-
-    private boolean isPolish;
-
-    @OneToMany(mappedBy = "game")
-    private List<OrderDetails> orderDetails;
-
     @OneToMany(mappedBy = "game")
     private List<Tournament> tournaments;
+
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
     public Game(){
     }
 
-    public Game(String gameName,Category category,String image, float price, float sizeGB, boolean isPolish) {
+    public Game(String gameName,Category category,String image, BigDecimal price, BigDecimal sizeGB, boolean isPolish) {
         this.gameName = gameName;
         this.category = category;
         category.addGameToCategory(this);
@@ -42,9 +41,9 @@ public class Game {
         this.price = price;
         this.sizeGB = sizeGB;
         this.isPolish = isPolish;
-        this.orderDetails = new ArrayList<OrderDetails>();
         this.gameCodes= new ArrayList<GameCode>();
         this.tournaments= new ArrayList<Tournament>();
+        this.version=0;
     }
 
     public String getGameName() {
@@ -55,11 +54,11 @@ public class Game {
         return category;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public float getSizeGB() {
+    public BigDecimal getSizeGB() {
         return sizeGB;
     }
 
@@ -76,9 +75,6 @@ public class Game {
 
     public String getImage() {
         return image;
-    }
-    public void addOrder(PlatformOrder platformOrder){
-        //this.platformOrders.add(platformOrder);
     }
 
     public int getGame_ID() {

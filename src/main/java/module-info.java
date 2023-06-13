@@ -15,4 +15,5 @@ module com.example.project.Logic.MainController {
     opens com.example.project to org.hibernate.orm.core;
     opens com.example.project.Providers to org.hibernate.orm.core;
     opens com.example.project.Logic to org.hibernate.orm.core;
+    opens com.example.project.Logic.DatabaseClasses to org.hibernate.orm.core;
 }

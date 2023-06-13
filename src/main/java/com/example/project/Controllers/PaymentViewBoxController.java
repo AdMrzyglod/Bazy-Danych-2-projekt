@@ -1,7 +1,9 @@
 package com.example.project.Controllers;
 
-import com.example.project.Controllers.GameViewBox.AbstractGameViewBox;
-import com.example.project.Logic.*;
+import com.example.project.Logic.DatabaseClasses.GameCode;
+import com.example.project.Logic.DatabaseClasses.OrderDetails;
+import com.example.project.Logic.DatabaseClasses.Payment;
+import com.example.project.Logic.DatabaseClasses.PlatformOrder;
 import com.example.project.Logic.MainController.AppController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +17,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class PaymentViewBoxController {
     private Label orderDate;
     @FXML
     private Label orderName;
+    @FXML
+    private Button verifiedButton;
 
 
     public void setOrderNumber(String number){
@@ -61,7 +64,7 @@ public class PaymentViewBoxController {
             this.paymentBox.setHgrow(container, Priority.ALWAYS);
             container.setPrefSize(660, 75+50*codes.size());
             height+=75+50*codes.size();
-            TextField label = new TextField("  Gra:  " +detail.getGame().getGameName()+"  Cena za sztukę:  "+detail.getPricePerCode() +"   Ilość kodów:  "+codes.size());
+            TextField label = new TextField("       Gra:  " +detail.getGameCode().getGame().getGameName()+"         Cena:  "+detail.getCodePrice());
             label.setStyle("-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;-fx-background-color:#404040;");
             label.setPrefSize(660,75);
             label.setEditable(false);
@@ -132,5 +135,15 @@ public class PaymentViewBoxController {
     }
 
 
+    @FXML
+    protected void onAccept(ActionEvent e){
+        this.app.provider.verifiedPayment(Integer.parseInt(this.orderNumber.getText()));
+        this.verifiedButton.setText("Ok");
+        this.verifiedButton.setDisable(true);
+    }
 
+    public void showVerifiedButton(){
+        this.verifiedButton.setDisable(false);
+        this.verifiedButton.setVisible(true);
+    }
 }

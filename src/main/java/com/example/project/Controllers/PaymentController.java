@@ -1,12 +1,9 @@
 package com.example.project.Controllers;
 
-import com.example.project.Controllers.GameViewBox.LibraryGameViewBox;
 import com.example.project.Logic.CategoryPanel;
-import com.example.project.Logic.Filters.SpecializedFilter;
-import com.example.project.Logic.Game;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.Payment;
-import com.example.project.Logic.PlatformOrder;
+import com.example.project.Logic.DatabaseClasses.Payment;
+import com.example.project.Logic.DatabaseClasses.PlatformOrder;
 import com.example.project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,17 +13,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.List;
+import java.util.regex.Pattern;
 
 public class PaymentController {
 
@@ -54,6 +49,8 @@ public class PaymentController {
     private TextField accountNumber;
     @FXML
     private Label codeProblem;
+    @FXML
+    private Label totalPrice;
 
     @FXML
     protected void onShopButtonClick(ActionEvent e) throws IOException {
@@ -100,7 +97,7 @@ public class PaymentController {
 
     @FXML
     protected void onPaymentButton(ActionEvent e) throws ParseException, IOException {
-        if(getDate().compareTo(new Timestamp(System.currentTimeMillis()))>0){
+        if(getDate().compareTo(new Timestamp(System.currentTimeMillis()))>0 || !Pattern.compile("\\d{2}-\\d{4}-\\d{4}-\\d{4}-\\d{4}").matcher(getAccountNumber()).matches()){
             this.setCodeProblem("Problem !");
         }
         else {
@@ -108,6 +105,7 @@ public class PaymentController {
             this.app.paymentLoad(new Stage());
             closeStage();
         }
+        setTotalPrice(this.app.provider.getUsersByName(this.app.getUser().getUsername()).getMoney()+"");
     }
 
     @FXML
@@ -172,8 +170,8 @@ public class PaymentController {
         scrollPane.setContent(vbox);
     }
 
-    protected float getAmount(){
-        return Float.parseFloat(this.amount.getText());
+    protected BigDecimal getAmount(){
+        return BigDecimal.valueOf(Float.parseFloat(this.amount.getText()));
     }
     private String getTitle(){
         return this.title.getText();
@@ -198,6 +196,14 @@ public class PaymentController {
 
     protected void setCodeProblem(String text){
         this.codeProblem.setText(text);
+    }
+
+    public Label getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String text) {
+        this.totalPrice.setText(text);
     }
 
 }

@@ -1,22 +1,15 @@
 package com.example.project.Controllers;
 
 import com.example.project.Controllers.GameViewBox.AbstractGameViewBox;
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.Game;
 import com.example.project.Logic.MainController.AppController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-
-import java.io.IOException;
-
-import static java.lang.System.out;
 
 public class GameViewBoxController {
 

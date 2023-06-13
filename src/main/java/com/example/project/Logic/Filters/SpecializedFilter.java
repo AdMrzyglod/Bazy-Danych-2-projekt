@@ -1,6 +1,6 @@
 package com.example.project.Logic.Filters;
 
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.Game;
 import com.example.project.Logic.Option;
 
 import java.util.ArrayList;
@@ -15,20 +15,19 @@ public class SpecializedFilter {
     }
 
     public boolean correctCategory(Game game){
-        return gameFilter.getCategory().contains(game.getCategory());
+        return gameFilter.getCategory().contains(game.getCategory().getCategoryName());
     }
     public boolean correctPrice(Game game){
-        return game.getPrice()>=gameFilter.getPrice()[0] && game.getPrice()<=gameFilter.getPrice()[1];
+        return game.getPrice().compareTo(gameFilter.getPrice()[0]) >= 0 && game.getPrice().compareTo(gameFilter.getPrice()[1]) <= 0;
     }
     public boolean correctSize(Game game){
-        return game.getSizeGB()>= gameFilter.getSizeGB()[0] && game.getSizeGB()<=gameFilter.getSizeGB()[1];
+        return game.getSizeGB().compareTo(gameFilter.getSizeGB()[0]) >= 0 && game.getSizeGB().compareTo(gameFilter.getSizeGB()[1]) <= 0;
     }
     public boolean correctPolish(Game game){
         if(gameFilter.getIsPolish()== Option.BOTH){
             return true;
         }
-        //return gameFilter.getIs()==game.getIsPolish();
-        return false;
+        return (gameFilter.getIsPolish().equals(Option.YES)? true: false)==game.getIsPolish();
     }
 
     public boolean checkGame(Game game){

@@ -1,13 +1,19 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Version;
 
 @Entity
 public class IndividualUser extends PlatformUser{
 
     private String firstname;
     private String lastname;
+
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
 
     public IndividualUser(){
     }
@@ -16,6 +22,7 @@ public class IndividualUser extends PlatformUser{
         super(username, password, email);
         this.firstname = firstname;
         this.lastname = lastname;
+        this.version=0;
     }
 
     public String getFirstname() {

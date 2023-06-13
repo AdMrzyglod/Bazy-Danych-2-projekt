@@ -1,25 +1,21 @@
 package com.example.project.Controllers;
 
-import com.example.project.Logic.*;
+import com.example.project.Logic.DatabaseClasses.Game;
+import com.example.project.Logic.DatabaseClasses.PlatformUser;
+import com.example.project.Logic.DatabaseClasses.Tournament;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Main;
 import com.example.project.RandomCode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class TournamentViewBoxController {
@@ -187,7 +183,7 @@ public class TournamentViewBoxController {
 
                     VBox infoBox = new VBox();
                     infoBox.setPrefSize(660, 50);
-                    Label infoLabel = new Label("   " + (i + 1) + "         " + user.getUsername() + "   ");
+                    Label infoLabel = new Label("   " + (i + 1) + "         " + user.getUsername() + "   " + this.app.provider.getCodeToTournament(Integer.parseInt(this.tournamentNumber.getText()),user.getUser_ID()));
                     infoLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: #000056; -fx-font-weight: BOLD;");
                     infoLabel.setPrefSize(660, 50);
                     infoLabel.setAlignment(Pos.CENTER);

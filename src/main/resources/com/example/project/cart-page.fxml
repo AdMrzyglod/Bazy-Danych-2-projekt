@@ -159,7 +159,14 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox fillHeight="false" prefHeight="70.0" prefWidth="290.0" />
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="70.0" prefWidth="290.0">
+               <children>
+                  <Label fx:id="codeProblem" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="271.0" style="-fx-font-size: 15px; -fx-text-fill: red;" textFill="#04022b">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children></HBox>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="290.0" style="-fx-border-color: #202020; -fx-border-width: 7px;">
                <children>
                   <VBox alignment="CENTER" prefHeight="77.0" prefWidth="135.0">

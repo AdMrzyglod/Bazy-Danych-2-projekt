@@ -1,11 +1,9 @@
 package com.example.project.Controllers;
 
 import com.example.project.Controllers.GameViewBox.LibraryGameViewBox;
-import com.example.project.Controllers.GameViewBox.ShopGameViewBox;
-import com.example.project.Logic.Category;
 import com.example.project.Logic.CategoryPanel;
 import com.example.project.Logic.Filters.SpecializedFilter;
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.Game;
 import com.example.project.Logic.MainController.AppController;
 import com.example.project.Main;
 import javafx.event.ActionEvent;
@@ -24,8 +22,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 public class LibraryController {
@@ -152,21 +148,22 @@ public class LibraryController {
     @FXML
     public void applyFilters(ActionEvent e) throws IOException {
         this.categoryPanel.setFilters();
-        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
+        this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.provider.getUserGames(this.app.getUser().getUsername())));
     }
 
     @FXML
     public void setCategoryPanel() throws IOException {
         ScrollPane scrollPane=(ScrollPane) stage.getScene().lookup("#categoryList");
 
-        //scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
+        scrollPane.setContent(categoryPanel.createVBOX(this.app.provider.getAllCategories()));
     }
 
     @FXML
     private void resetFilters(ActionEvent e) throws IOException {
         setCategoryPanel();
-        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.getUser().getUserGames()));
+        addToGameList(this.app.provider.getUserGames(this.app.getUser().getUsername()));
     }
+
 
     public void setApp(AppController app){
         this.app=app;

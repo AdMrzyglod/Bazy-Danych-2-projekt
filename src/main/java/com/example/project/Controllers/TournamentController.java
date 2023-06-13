@@ -2,8 +2,7 @@ package com.example.project.Controllers;
 
 import com.example.project.Logic.CategoryPanel;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.PlatformOrder;
-import com.example.project.Logic.Tournament;
+import com.example.project.Logic.DatabaseClasses.Tournament;
 import com.example.project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,14 +86,14 @@ public class TournamentController {
     protected void onAvailableTournament(ActionEvent e) throws IOException {
         this.disableButton=false;
         this.addlist=false;
-       addTournaments(this.app.provider.getAvailableTournaments(this.app.getUser().getUsername()));
+       addTournaments(this.app.provider.getAvailableTournaments(this.app.getUser().getUser_ID()));
     }
 
     @FXML
     protected void onInfoTournament(ActionEvent e) throws IOException {
         this.disableButton=true;
         this.addlist=false;
-        addTournaments(this.app.provider.getUserTournaments(this.app.getUser().getUsername()));
+        addTournaments(this.app.provider.getUserTournaments(this.app.getUser().getUser_ID()));
     }
 
     @FXML

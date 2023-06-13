@@ -1,17 +1,14 @@
 package com.example.project.Controllers;
 
-import com.example.project.Controllers.GameViewBox.CartGameViewBox;
 import com.example.project.Controllers.GameViewBox.ShopGameViewBox;
-import com.example.project.Logic.Category;
 import com.example.project.Logic.CategoryPanel;
 import com.example.project.Logic.Filters.SpecializedFilter;
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.Game;
 import com.example.project.Logic.MainController.AppController;
 import com.example.project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,13 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
-
-import static java.lang.System.out;
-import static java.util.stream.Collectors.toList;
 
 public class HomeController {
 
@@ -127,19 +118,20 @@ public class HomeController {
     @FXML
     public void applyFilters(ActionEvent e) throws IOException {
         this.categoryPanel.setFilters();
-        //this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.games));
+        this.addToGameList(this.getSpecializedFilter().getCorrectGames(this.app.provider.getGames()));
     }
 
     @FXML
     public void setCategoryPanel() throws IOException {
         ScrollPane scrollPane=(ScrollPane) stage.getScene().lookup("#categoryList");
 
-        //scrollPane.setContent(categoryPanel.createVBOX(new ArrayList<Category>(EnumSet.allOf(Category.class))));
+        scrollPane.setContent(categoryPanel.createVBOX(this.app.provider.getAllCategories()));
     }
 
     @FXML
     private void resetFilters(ActionEvent e) throws IOException {
         setCategoryPanel();
+        addToGameList(this.app.provider.getGames());
     }
 
     public void setApp(AppController app){

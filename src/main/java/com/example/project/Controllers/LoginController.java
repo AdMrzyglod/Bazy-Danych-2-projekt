@@ -1,7 +1,6 @@
 package com.example.project.Controllers;
 
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.PlatformUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -30,7 +29,16 @@ public class LoginController {
             app.setUser(this.app.provider.getUsersByName(getUserName()));
 
             app.setCompany(this.app.provider.getIsCompanyUser(this.app.getUser().getUser_ID()));
+
             app.homeLoad(new Stage());
+
+            closeStage();
+        }
+        else if(this.app.provider.employeeLoginAuthorization(getUserName(),getPassword())){
+
+            app.setEmployee(this.app.provider.getEmployee(getUserName()));
+
+            app.employeeLoad(new Stage());
 
             closeStage();
         }

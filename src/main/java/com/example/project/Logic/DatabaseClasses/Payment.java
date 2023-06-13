@@ -1,7 +1,8 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,7 +16,7 @@ public class Payment {
     @JoinColumn(name="user_id")
     private PlatformUser platformUser;
 
-    private float amount;
+    private BigDecimal amount;
 
     private String bankAccountNumber;
 
@@ -23,22 +24,28 @@ public class Payment {
     private String title;
     private boolean isVerified;
 
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
+
     public Payment() {
     }
 
-    public Payment(float amount, String bankAccountNumber, Timestamp date, String title) {
+    public Payment(BigDecimal amount, String bankAccountNumber, Timestamp date, String title) {
         this.amount = amount;
         this.bankAccountNumber = bankAccountNumber;
         this.date = date;
         this.title = title;
         this.isVerified=false;
+        this.version=0;
     }
 
     public int getPayment_ID() {
         return payment_ID;
     }
 
-    public float getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 

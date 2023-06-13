@@ -1,9 +1,8 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,6 +22,11 @@ public class PlatformOrder {
 
     private Timestamp orderDate;
 
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
+
     @PrePersist
     protected void onCreate() {
         this.orderDate = new Timestamp(System.currentTimeMillis());
@@ -35,6 +39,7 @@ public class PlatformOrder {
         this.platformUser = platformUser;
         platformUser.addOrder(this);
         this.orderDetails = new ArrayList<OrderDetails>();
+        this.version=0;
     }
     public void addDetailsToOrder(OrderDetails details){
         this.orderDetails.add(details);

@@ -1,13 +1,17 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
+
+import com.example.project.Logic.DatabaseClasses.PlatformUser;
+import com.example.project.Logic.DatabaseClasses.Tournament;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class CompanyUser extends PlatformUser{
+public class CompanyUser extends PlatformUser {
 
     private String companyName;
     private String country;
@@ -17,6 +21,9 @@ public class CompanyUser extends PlatformUser{
 
     @OneToMany(mappedBy = "companyUser")
     private List<Tournament> tournaments;
+
+    @Version
+    private int version=0;
 
     public CompanyUser(){
     }
@@ -29,6 +36,7 @@ public class CompanyUser extends PlatformUser{
         this.street = street;
         this.phone = phone;
         this.tournaments= new ArrayList<Tournament>();
+        this.version=0;
     }
 
     public String getCompanyName() {

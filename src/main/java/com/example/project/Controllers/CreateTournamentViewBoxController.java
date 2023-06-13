@@ -1,14 +1,11 @@
 package com.example.project.Controllers;
 
-import com.example.project.Logic.CompanyUser;
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.CompanyUser;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.Tournament;
-import com.example.project.RandomCode;
+import com.example.project.Logic.DatabaseClasses.Tournament;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;

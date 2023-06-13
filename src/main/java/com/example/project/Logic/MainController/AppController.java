@@ -2,6 +2,8 @@ package com.example.project.Logic.MainController;
 
 import com.example.project.Controllers.*;
 import com.example.project.Logic.*;
+import com.example.project.Logic.DatabaseClasses.Employee;
+import com.example.project.Logic.DatabaseClasses.PlatformUser;
 import com.example.project.Main;
 import com.example.project.Providers.Provider;
 import javafx.application.Application;
@@ -11,8 +13,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AppController extends Application {
 
@@ -20,6 +20,7 @@ public class AppController extends Application {
 
     public Provider provider= new Provider();
     private PlatformUser platformUser;
+    private Employee employee;
     private Cart cart;
     private LoginController loginController;
     private HomeController homeController;
@@ -29,6 +30,8 @@ public class AppController extends Application {
     private RegisterCompanyController registerCompanyController;
     private PaymentController paymentController;
     private TournamentController tournamentController;
+
+    private EmployeeController employeeController;
 
     public Stage stage;
     private boolean isCompany=false;
@@ -41,6 +44,7 @@ public class AppController extends Application {
     }
 
     public void loginLoad(Stage stage) throws IOException {
+        this.cart = new Cart();
         this.stage=stage;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
@@ -135,6 +139,7 @@ public class AppController extends Application {
         stage.setScene(scene);
         stage.setTitle("GameNet");
         paymentController.addAllOrders();
+        paymentController.setTotalPrice(this.provider.getUsersByName(this.platformUser.getUsername()).getMoney()+"");
         stage.show();
     }
 
@@ -149,10 +154,25 @@ public class AppController extends Application {
         userlabel.setText(platformUser.getUsername());
         stage.setScene(scene);
         stage.setTitle("GameNet");
-        tournamentController.addTournaments(this.provider.getAvailableTournaments(this.getUser().getUsername()));
+        tournamentController.addTournaments(this.provider.getAvailableTournaments(this.getUser().getUser_ID()));
         if(!isCompany()){
             tournamentController.settingsForIndividual();
         }
+        stage.show();
+    }
+
+    public void employeeLoad(Stage stage) throws IOException {
+        this.stage=stage;
+        FXMLLoader fxmlLoader =  new FXMLLoader(Main.class.getResource("employee-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),1320,800);
+        employeeController=fxmlLoader.getController();
+        employeeController.setApp(this);
+        employeeController.setStage(stage);
+        Label userlabel=(Label) scene.lookup("#userName");
+        userlabel.setText(getEmployee().getUsername());
+        stage.setScene(scene);
+        stage.setTitle("GameNet");
+        employeeController.onCreate();
         stage.show();
     }
 
@@ -182,5 +202,13 @@ public class AppController extends Application {
 
     public boolean isCompany() {
         return isCompany;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

@@ -11,8 +11,8 @@
     <property name="format_sql">true</property>
     <property name="use_sql_comments">true</property>
     <property name="hbm2ddl.auto">create-drop</property>
-    <mapping class="com.example.project.Logic.PlatformUser"></mapping>
-    <mapping class="com.example.project.Logic.Game"></mapping>
-    <mapping class="com.example.project.Logic.PlatformOrder"></mapping>
+    <mapping class="com.example.project.Logic.DatabaseClasses.PlatformUser"></mapping>
+    <mapping class="com.example.project.Logic.DatabaseClasses.Game"></mapping>
+    <mapping class="com.example.project.Logic.DatabaseClasses.PlatformOrder"></mapping>
   </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,8 @@
 package com.example.project.Logic;
 
+import com.example.project.Logic.DatabaseClasses.Game;
+
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Cart{
@@ -25,10 +28,10 @@ public class Cart{
         return gamesCart;
     }
 
-    public float getTotalPrice(){
-        float value=0;
+    public BigDecimal getTotalPrice(){
+        BigDecimal value=BigDecimal.valueOf(0);
         for (Map.Entry<Game, Integer> entry : gamesCart.entrySet()) {
-            value+=entry.getKey().getPrice()*entry.getValue();
+            value=value.add(entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
         return value;

@@ -1,5 +1,6 @@
 package com.example.project.Logic;
 
+import com.example.project.Logic.DatabaseClasses.Category;
 import com.example.project.Logic.Filters.SpecializedFilter;
 import com.example.project.Main;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.time.format.TextStyle;
+import java.math.BigDecimal;
 import java.util.List;
-
-import static java.lang.System.out;
 
 public class CategoryPanel {
 
@@ -57,10 +56,10 @@ public class CategoryPanel {
             CheckBox checkBox = new CheckBox(category.getCategoryName());
             checkBox.setOnAction((actionEvent) -> {
                 if(checkBox.isSelected()){
-                    specializedFilter.gameFilter.addCategory(new Category());
+                    specializedFilter.gameFilter.addCategory(checkBox.getText());
                 }
                 else{
-                    specializedFilter.gameFilter.removeCategory(new Category());
+                    specializedFilter.gameFilter.removeCategory(checkBox.getText());
                 }
 
             });
@@ -136,10 +135,10 @@ public class CategoryPanel {
         toPrice =(TextField)scene.lookup("#to");
 
         fromPrice.setOnAction((actionEvent) -> {
-            this.specializedFilter.gameFilter.setPriceFrom(Float.parseFloat(fromPrice.getText()));
+            this.specializedFilter.gameFilter.setPriceFrom(BigDecimal.valueOf(Double.parseDouble(fromPrice.getText())));
         });
         toPrice.setOnAction((actionEvent) -> {
-            this.specializedFilter.gameFilter.setPriceTo(Float.parseFloat(toPrice.getText()));
+            this.specializedFilter.gameFilter.setPriceTo(BigDecimal.valueOf(Double.parseDouble(toPrice.getText())));
         });
 
         return panel;
@@ -154,19 +153,18 @@ public class CategoryPanel {
         toSize =(TextField)scene.lookup("#to");
 
         fromSize.setOnAction((actionEvent) -> {
-            this.specializedFilter.gameFilter.setSizeGBFrom(Float.parseFloat(fromSize.getText()));
+            this.specializedFilter.gameFilter.setSizeGBFrom(BigDecimal.valueOf(Double.parseDouble(fromSize.getText())));
         });
         toSize.setOnAction((actionEvent) -> {
-            this.specializedFilter.gameFilter.setSizeGBTo(Float.parseFloat(toSize.getText()));
+            this.specializedFilter.gameFilter.setSizeGBTo(BigDecimal.valueOf(Double.parseDouble(toPrice.getText())));
         });
 
         return panel;
     }
 
     public void setFilters(){
-        this.specializedFilter.gameFilter.setPrice(Float.parseFloat(fromPrice.getText()),Float.parseFloat(toPrice.getText()));
-        this.specializedFilter.gameFilter.setSizeGB(Float.parseFloat(fromSize.getText()),Float.parseFloat(toSize.getText()));
-        //out.println(this.specializedFilter.gameFilter.getPrice()[0]+"  "+this.specializedFilter.gameFilter.getPrice()[1]);
-        //out.println(this.specializedFilter.gameFilter.getSizeGB()[0]+"  "+this.specializedFilter.gameFilter.getSizeGB()[1]);
+        this.specializedFilter.gameFilter.setPrice(BigDecimal.valueOf(Double.parseDouble(fromPrice.getText())),BigDecimal.valueOf(Double.parseDouble(toPrice.getText())));
+        this.specializedFilter.gameFilter.setSizeGB(BigDecimal.valueOf(Double.parseDouble(fromSize.getText())),BigDecimal.valueOf(Double.parseDouble(toSize.getText())));
+
     }
 }

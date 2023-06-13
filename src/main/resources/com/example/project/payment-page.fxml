@@ -156,7 +156,7 @@
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="270.0" style="-fx-border-color: #04022b; -fx-border-width: 7px;">
                <children>
-                  <TextField fx:id="accountNumber" alignment="CENTER" prefHeight="70.0" prefWidth="280.0" promptText="Numer konta" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-size: 20px;" />
+                  <TextField fx:id="accountNumber" alignment="CENTER" prefHeight="70.0" prefWidth="280.0" promptText="Numer konta: NN-NNNN-NNNN-NNNN-NNNN" style="-fx-background-color: #505050; -fx-text-fill: #202020; -fx-font-size: 12px;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #04022b; -fx-background-color: #04022b; -fx-border-width: 7px;">
@@ -177,7 +177,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="290.0" spacing="40.0">
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="290.0" spacing="40.0">
                <children>
                   <RadioButton mnemonicParsing="false" onAction="#onOrderList" selected="true" style="-fx-text-fill: #202020; -fx-font-size: 14px;" text="Zamówienia">
                      <toggleGroup>
@@ -187,7 +187,29 @@
                   <RadioButton mnemonicParsing="false" onAction="#onPaymentList" style="-fx-text-fill: #202020; -fx-font-size: 14px;" text="Wpłaty" toggleGroup="$toggle" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="81.0" prefWidth="290.0" VBox.vgrow="ALWAYS" />
+            <VBox prefHeight="110.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 7px;">
+               <children>
+                  <HBox prefHeight="90.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 5px;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="90.0" prefWidth="290.0" style="-fx-font-size: 20px; -fx-text-fill: #04022b; -fx-font-weight: BOLD;" text="Stan konta" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="90.0" prefWidth="290.0" style="-fx-border-color: #04022b; -fx-border-width: 5px;">
+                     <children>
+                        <Label fx:id="totalPrice" alignment="CENTER" contentDisplay="CENTER" prefHeight="90.0" prefWidth="290.0" style="-fx-font-size: 20px; -fx-text-fill: #04022b; -fx-font-weight: BOLD;" text="Cena" textFill="#04022b">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="290.0" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="290.0" style="-fx-border-color: #202020; -fx-border-width: 7px;">
                <children>
                   <VBox alignment="CENTER" prefHeight="63.0" prefWidth="135.0">

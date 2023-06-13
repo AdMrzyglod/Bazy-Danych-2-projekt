@@ -1,9 +1,8 @@
 package com.example.project.Controllers;
 
 import com.example.project.Controllers.GameViewBox.CartGameViewBox;
-import com.example.project.Logic.Game;
+import com.example.project.Logic.DatabaseClasses.Game;
 import com.example.project.Logic.MainController.AppController;
-import com.example.project.Logic.Option;
 import com.example.project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,12 +19,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static java.lang.System.out;
 
 public class CartPageController {
     private AppController app;
@@ -33,6 +29,9 @@ public class CartPageController {
 
     @FXML
     private Label totalPrice;
+
+    @FXML
+    private Label codeProblem;
 
     @FXML
     protected void onShopButtonClick(ActionEvent e) throws IOException {
@@ -78,17 +77,21 @@ public class CartPageController {
             addToGameList(this.app.getCart().getGamesCart());
             setTotalPrice(0+"");
         }
+        this.setCodeProblem("");
     }
 
     @FXML
     protected void onBuyGamesClick(ActionEvent e) throws IOException {
-        float sumCart=this.app.getCart().getTotalPrice();
+        BigDecimal sumCart=this.app.getCart().getTotalPrice();
         if(this.app.getCart().getNumberOfGames()>0 && this.app.provider.userCanBuy(this.app.getUser().getUsername(),sumCart)){
-            this.app.provider.purchase(this.app.getUser(),this.app.getCart().getGamesCart(),sumCart);
-            this.app.getCart().clearCart();
+            this.app.provider.purchase(this.app.getUser().getUsername(),this.app.getCart(),sumCart);
             setTotalPrice(0+"");
-            addToGameList(this.app.getCart().getGamesCart());
         }
+        if(this.app.getCart().getGamesCart().size()>0){
+            this.setCodeProblem("Problem z zakupem!");
+            this.app.getCart().clearCart();
+        }
+        addToGameList(this.app.getCart().getGamesCart());
     }
 
     @FXML
@@ -153,5 +156,9 @@ public class CartPageController {
 
     public void setTotalPrice(String text) {
         this.totalPrice.setText(text);
+    }
+
+    protected void setCodeProblem(String message){
+        this.codeProblem.setText(message);
     }
 }

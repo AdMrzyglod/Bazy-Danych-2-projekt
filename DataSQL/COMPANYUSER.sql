@@ -1,0 +1,15 @@
+create table COMPANYUSER
+(
+    CITY        VARCHAR(255),
+    COMPANYNAME VARCHAR(255),
+    COUNTRY     VARCHAR(255),
+    PHONE       VARCHAR(255),
+    STREET      VARCHAR(255),
+    USER_ID     INTEGER not null
+        primary key
+        constraint FK8IRBLIO1MS0SNY8JIJFEEK7MJ
+            references PLATFORM_USER
+);
+
+INSERT INTO APP.COMPANYUSER (CITY, COMPANYNAME, COUNTRY, PHONE, STREET, USER_ID) VALUES ('San Francisco', 'GameDevelopment', 'USA', '111 222 333', 'High', 217);
+INSERT INTO APP.COMPANYUSER (CITY, COMPANYNAME, COUNTRY, PHONE, STREET, USER_ID) VALUES ('San Francisco', 'Nowa Firma ', 'USA', '111 111 111', 'River 11', 1306);

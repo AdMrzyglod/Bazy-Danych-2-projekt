@@ -1,10 +1,9 @@
-package com.example.project.Logic;
+package com.example.project.Logic.DatabaseClasses;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
 
 
 @Entity
@@ -18,7 +17,7 @@ public class PlatformUser {
     private String username;
     private String password;
     private String email;
-    private float money;
+    private BigDecimal money;
 
     @OneToMany
     @JoinColumn(name = "USER_ID")
@@ -29,28 +28,33 @@ public class PlatformUser {
     private List<Payment> payments;
 
     @OneToMany(mappedBy = "user")
-    private List<GameCode> gameCodes;
+    private List<ActiveCode> activeCodes;
 
     @OneToMany(mappedBy = "user")
     private List<UserTournament> userTournaments;
+
+    @Version
+    @Column(name = "version", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int version;
+
 
 
     public PlatformUser(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.money=0;
+        this.money=BigDecimal.valueOf(0);
         this.platformOrders = new ArrayList<PlatformOrder>();
-        this.gameCodes= new ArrayList<GameCode>();
+        this.activeCodes= new ArrayList<ActiveCode>();
         this.userTournaments= new ArrayList<UserTournament>();
         this.payments= new ArrayList<Payment>();
-        setMoney(10000);
+        setMoney(BigDecimal.valueOf(10000));
+        this.version=0;
     }
 
     public PlatformUser() {
 
     }
-
 
     public String getUsername() {
         return username;
@@ -65,26 +69,28 @@ public class PlatformUser {
     }
 
 
-    public float getMoney(){
+    public BigDecimal getMoney(){
         return money;
     }
 
-    public void setMoney(float money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 
-    public void updateMoney(float cash){
-        out.println(cash+ "  "+money+"  " + (money+cash));
-        this.money+=cash;
-        out.println(money);
+    public void updateMoney(BigDecimal cash){
+        this.money=money.add(cash);
     }
 
-    public boolean canBuy(float cash){
-        return this.money-cash>0 ? true : false;
+    public boolean canBuy(BigDecimal cash){
+        return this.money.subtract(cash).compareTo(BigDecimal.valueOf(0))>0 ? true : false;
     }
 
     public void addOrder(PlatformOrder platformOrder){
         this.platformOrders.add(platformOrder);
+    }
+
+    public void addActiveCode(ActiveCode activeCode){
+        this.activeCodes.add(activeCode);
     }
 
     public int getUser_ID() {
@@ -95,8 +101,8 @@ public class PlatformUser {
         return platformOrders;
     }
 
-    public List<GameCode> getGameCodes() {
-        return gameCodes;
+    public List<ActiveCode> getActiveCodes() {
+        return activeCodes;
     }
 
     public List<UserTournament> getUserTournaments() {
