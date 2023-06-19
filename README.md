@@ -9,7 +9,7 @@ Java
 
 JPA
 
-Apache Derby
+Apache Derby wersja 10.14.2.0 (https://db.apache.org/derby/releases/release-10_14_2_0.html)
 
 JavaFX
 
