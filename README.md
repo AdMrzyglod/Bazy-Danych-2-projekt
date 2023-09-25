@@ -1,5 +1,4 @@
 # Bazy-Danych-2-projekt
-# Adrian Mrzygłód
 
 
 Aplikacja desktopowa do zarządzania biblioteką gier. Do napisania 
